@@ -1,0 +1,33 @@
+.styleHeaderSection {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.styleListNavigation {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  list-style: none;
+  gap: 25px;
+  padding: 0;
+}
+
+.styleLink {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  text-transform: uppercase;
+  color: #ede5f6;
+  margin: 0 auto 26px auto;
+  text-decoration: none;
+  border: solid 3px #4b2a99;
+  border-radius: 7px;
+  &:hover,
+  &:focus {
+    background-color: #5cd3a8;
+    transition: 0.5s ease;
+  }
+}

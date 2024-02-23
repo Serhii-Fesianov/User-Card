@@ -8,7 +8,7 @@ export const ContentImage = () => {
     <div>
       <img
         src={imageSrc}
-        alt=""
+        alt="content"
         width={308}
         height={168}
         className={s.styleContentImage}
