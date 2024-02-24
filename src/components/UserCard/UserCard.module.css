@@ -66,11 +66,25 @@
   box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.25);
   background-color: #ebd8ff;
   margin-bottom: 36px;
+  transition: 0.5s ease;
   cursor: pointer;
-  &:focus {
-    background-color: #5cd3a8;
-    transition: 0.5s ease;
-  }
+}
+
+.styleButtonFollowing {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  text-transform: uppercase;
+  color: #373737;
+  border-radius: 10px;
+  padding: 14px 28px;
+  width: 196px;
+  height: 50px;
+  box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.25);
+  transition: 0.5s ease;
+  background-color: #5cd3a8;
+  margin-bottom: 36px;
+  cursor: pointer;
 }
 
 .styleAvatar {

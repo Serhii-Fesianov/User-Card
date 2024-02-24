@@ -1,19 +1,41 @@
 import { UserCard } from 'components/UserCard/UserCard';
-import { selectFilteredUsers } from 'components/redux/selectors';
-import { useSelector } from 'react-redux';
 import s from './UserList.module.css';
+import { useEffect, useState } from 'react';
+import { getUsers } from 'services/services';
 
 export const UserList = () => {
-  const userList = useSelector(selectFilteredUsers);
+  const [page, setPage] = useState(1);
+  const [list, setList] = useState([]);
+
+  useEffect(() => {
+    try {
+      (async () => {
+        const list = await getUsers(page);
+        if (list) {
+          setList(prevItem => [...prevItem, ...list]);
+        }
+      })();
+    } catch (error) {
+      console.log(error);
+    }
+  }, [page]);
+
+  const handleLoadMore = () => {
+    setPage(prevPage => prevPage + 1);
+  };
 
   return (
     <>
       <ul className={s.styleList}>
-        {userList.map(user => {
+        {list.map(user => {
           return <UserCard key={user.id} user={user} />;
         })}
       </ul>
-      <button className={s.styleLoadMore} type="button">
+      <button
+        onClick={handleLoadMore}
+        className={s.styleLoadMore}
+        type="button"
+      >
         Load More
       </button>
     </>
