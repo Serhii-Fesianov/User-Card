@@ -2,27 +2,25 @@ import React, { useState } from 'react';
 import s from './UserCard.module.css';
 import { LogoComponent } from 'components/LogoComponent/LogoComponent';
 import { ContentImage } from 'components/ContentImage/ContentImage';
+import { updateUser } from 'services/services';
 
 export const UserCard = ({ user }) => {
   const [_user, setUser] = useState(user);
-  const [_isFollowing, setFollow] = useState(true);
-
-  const handleFolow = () => {
-    setUser(currentUser => {
-      let changedUser = {
-        isFollowing: _isFollowing,
-        followers: _isFollowing
-          ? currentUser.followers + 1
-          : currentUser.followers - 1,
-        avatar: currentUser.avatar,
-        id: currentUser.id,
-        user: currentUser.user,
-        tweets: currentUser.tweets,
-      };
-      return changedUser;
-    });
-    setFollow(_isFollowing => (_isFollowing = !_isFollowing));
+  const handleFolow = item => {
+    try {
+      (async () => {
+        const user = await updateUser(item);
+        setUser(user);
+      })();
+    } catch (error) {
+      return error;
+    }
   };
+  function getChangedFollowers(followers) {
+    const numberString = followers.toString();
+    const regex = /(\d)(?=(\d{3})+(?!\d))/g;
+    return numberString.replace(regex, '$1,');
+  }
   return (
     <li className={s.wrapperUser}>
       <LogoComponent />
@@ -37,12 +35,16 @@ export const UserCard = ({ user }) => {
           className={s.styleAvatar}
         />
       </span>
-      <p className={s.styleTextTw}>{_user.tweets} TWEETS</p>
-      <p className={s.styleTextFl}>{_user.followers} FOLLOWERS</p>
+      <p className={s.styleTextTw}>
+        {getChangedFollowers(_user.tweets)} TWEETS
+      </p>
+      <p className={s.styleTextFl}>
+        {getChangedFollowers(_user.followers)} FOLLOWERS
+      </p>
       <button
         className={_user.isFollowing ? s.styleButtonFollowing : s.styleButton}
         type="button"
-        onClick={() => handleFolow()}
+        onClick={() => handleFolow(_user)}
       >
         {_user.isFollowing ? 'FOLLOWING' : 'FOLLOW'}
       </button>

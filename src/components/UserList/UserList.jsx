@@ -12,11 +12,13 @@ export const UserList = () => {
       (async () => {
         const list = await getUsers(page);
         if (list) {
-          setList(prevItem => [...prevItem, ...list]);
+          setList(prevItem => {
+            return page > 1 ? [...prevItem, ...list] : [...list];
+          });
         }
       })();
     } catch (error) {
-      console.log(error);
+      return error;
     }
   }, [page]);
 

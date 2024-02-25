@@ -10,16 +10,30 @@ export const getUsers = async (page = 1) => {
     limit: 3,
   });
   try {
-    let { data } = await axiosInstance.get(`/users/?${params}`);
-    data.forEach(element => {
-      const options = { maximumFractionDigits: 2 };
-      element.tweets = Intl.NumberFormat('en-US', options).format(
-        element.tweets
-      );
-
-      element.isFollowing = false;
-    });
-
+    const { data } = await axiosInstance.get(`/users/?${params}`);
     return data;
   } catch (error) {}
+};
+
+export const updateUser = async item => {
+  try {
+    const updatedUser = {
+      isFollowing: !item.isFollowing,
+      followers: item.isFollowing
+        ? Number(item.followers) - 1
+        : Number(item.followers) + 1,
+      avatar: item.avatar,
+      id: item.id,
+      user: item.user,
+      tweets: item.tweets,
+    };
+
+    const { data } = await axiosInstance.put(
+      `/users/${updatedUser.id}`,
+      updatedUser
+    );
+    return data;
+  } catch (error) {
+    return error;
+  }
 };
