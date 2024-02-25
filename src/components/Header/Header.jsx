@@ -14,7 +14,7 @@ export const Header = () => {
               </NavLink>
             </li>
             <li>
-              <NavLink to="users" className={s.styleLink}>
+              <NavLink to="tweets" className={s.styleLink}>
                 Users
               </NavLink>
             </li>
